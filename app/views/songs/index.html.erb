@@ -1,0 +1,60 @@
+<h1>hola mundo!</h1>
+
+<div class="row">
+        <div class="col col-md-6">
+                <%= render  "form", song: @song  %>
+        </div>
+</div>
+<div class="row">
+        <div id= "caja" class="col col-md-8">
+                        
+                        <% @songs.each do |song| %>
+                        <li id="<%= song.id%>">
+                        <%= song.title %>
+                        <%= link_to 'show',song_path(song), data:{remote: true} %>
+                        <%= link_to 'Edit',edit_song_path(song), data:{remote:true} %>
+                        <%= link_to "Delete", song_path(song), method: :delete, data:{ remote: true, confirm: 'Esta seguro de querer Eliminar esta Cancion'} %>
+                </li>
+                        <br>
+
+                
+                <% end %>
+
+                <%= render  "modal" %>
+
+                 </div>
+                 
+</div>
+
+<div class="row">
+                <div class="col col-md-4">
+                        <h1>filtro de datos</h1> 
+                       <%= form_with(url: search_songs_path) do |f| %>
+                                <%= f.text_field :search %>
+                                <%= f.submit 'Buscar' %>
+                       <% end %>
+                </div>
+                <div class="col col-md-4">
+                        <div id="objetos"></div>
+                </div>
+
+        </div>
+
+        <script>
+                
+                        $('#search').keyup(()=>{
+                                var resultado = $('#search').val()
+                                var total = resultado.length
+                                if (total >=3){
+                                        $.ajax({
+                                                type: "GET",
+                                                url: "<%= search_songs_path%>",
+                                                data: {search: $('#search').val()},
+                                                success: function (response) {
+                                                        
+                                                }
+                                        });
+                                }
+
+                        });
+        </script>

@@ -1,0 +1,3 @@
+$( "#search" ).keyup(function() {
+  $('#objetos').html('<% @songs.each do |song|%><li><%=song.title%></li><%end%>');
+});
